@@ -19,41 +19,33 @@ public class Util {
     private static Connection connection;
     private static SessionFactory sessionFactory;
 
-    public static Connection getConnect() {
-        try {
-            return DriverManager.getConnection(url, user, pass);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static Connection getConnect() throws SQLException {
+        return DriverManager.getConnection(url, user, pass);
     }
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
-            try {
-                Configuration configuration = new Configuration();
+            Configuration configuration = new Configuration();
 
-                Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, url);
-                settings.put(Environment.USER, user);
-                settings.put(Environment.PASS, pass);
+            Properties settings = new Properties();
+            settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+            settings.put(Environment.URL, url);
+            settings.put(Environment.USER, user);
+            settings.put(Environment.PASS, pass);
 
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-                settings.put(Environment.SHOW_SQL, "true");
-                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+            settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+            settings.put(Environment.SHOW_SQL, "true");
+            settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
-                configuration.setProperties(settings);
+            configuration.setProperties(settings);
 
-                configuration.addAnnotatedClass(User.class);
+            configuration.addAnnotatedClass(User.class);
 
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
 
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
         return sessionFactory;
     }
