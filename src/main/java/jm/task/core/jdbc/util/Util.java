@@ -13,14 +13,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
-    private static final String url = "jdbc:mysql://localhost/MyFirstBase";
-    private static final String user = "root";
-    private static final String pass = "1r8C8%XJsSd!";
+    private static final String Url = "jdbc:mysql://localhost/MyFirstBase";
+    private static final String User = "root";
+    private static final String Password = "1r8C8%XJsSd!";
     private static Connection connection;
     private static SessionFactory sessionFactory;
 
     public static Connection getConnect() throws SQLException {
-        return DriverManager.getConnection(url, user, pass);
+        return DriverManager.getConnection(Url, User, Password);
     }
 
     public static SessionFactory getSessionFactory() {
@@ -29,9 +29,9 @@ public class Util {
 
             Properties settings = new Properties();
             settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            settings.put(Environment.URL, url);
-            settings.put(Environment.USER, user);
-            settings.put(Environment.PASS, pass);
+            settings.put(Environment.URL, Url);
+            settings.put(Environment.USER, User);
+            settings.put(Environment.PASS, Password);
 
             settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
             settings.put(Environment.SHOW_SQL, "true");
